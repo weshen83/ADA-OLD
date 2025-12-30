@@ -115,7 +115,7 @@ export const stripeWebhookPayloadSchema = z.object({
         object: z.object({
             id: z.string(),
             customer_email: z.string().email().optional(),
-            metadata: z.record(z.string()).optional(),
+            metadata: z.record(z.string(), z.string()).optional(),
         }),
     }),
 });
