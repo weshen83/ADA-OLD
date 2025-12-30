@@ -34,8 +34,11 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // Get geo information from Vercel
-    const country = request.geo?.country || 'US';
+    // Get geo information (supports Vercel and Netlify)
+    const country = request.headers.get('x-vercel-ip-country') ||
+        request.headers.get('x-nf-country-code') ||
+        (request as any).geo?.country ||
+        'US';
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
 
     // ===========================================
